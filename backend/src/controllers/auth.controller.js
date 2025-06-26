@@ -1,34 +1,34 @@
-import { genToken } from "../lib/utils.js";
+import { genToken } from "../lib/utils.js"
 import User from "../models/user.model.js"
-import bcrypt from "bcryptjs" 
+import bcrypt from "bcryptjs"
 
-export const signup = async(req,res) => {
-
-    const {email, fullname, username, password} = req.body
+export const signup = async (req,res) => {
+    const { fullname, username, email, password } = req.body;
 
     try {
+        if(!fullname || !username || !email || !username){
+            return res.status(400).json({message: "Fill out all fields please"});
+        }
         if(password.length < 6){
             return res.status(400).json({message: "Password must be at least 6 characters"});
         }
 
         const temp = await User.findOne({email})
         if(temp){return res.status(400).json({message: "A user with this email already exists"}); }
-        temp = await User.findOne({username})
-        if(temp){return res.status(400).json({message: "A user with this username already exists"}); }
 
-        const salt = await bcrypt.genSalt(10)
-        const hashdPass = await bcrypt.hash(password, salt)
+        const salt = await bcrypt.genSalt(10);
+        const hashdPass = await bcrypt.hash(password, salt);
 
         const newUser = new User({
             fullname,
             username,
             email,
             password:hashdPass
-        })
+        });
 
         if (newUser) {
             //jwt token generated here
-            genToken(newUser._id,res)
+            genToken(newUser._id,res);
             await newUser.save();
 
             res.status(201).json({
