@@ -20,11 +20,11 @@ const App = () => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-{/** */}
+
   console.log("authuser: ", authUser);
 
   if(isCheckingAuth && !authUser){ 
-      <div className="flex items-center justify-center h-screen"> //loader during auth checker
+      <div className="flex items-center justify-center h-screen"> {/*loader during auth checker*/}
         <Loader className="size-10 animate-spin" />
       </div>
   }
@@ -33,11 +33,11 @@ const App = () => {
     <div data-theme={theme}>
       <Navbar />
       <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} /> //Route to HomePage if user not authenticated route to LoginPage
-        <Route path="/signup" element={!authUser ? <SignupPage /> : <Navigate to="/" />} /> //Route to SignupPage if user is authenticated route to HomePage
-        <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} /> //Route to LoginPage if user is authenticated route to HomePage
-        <Route path="/settings" element={<SettingsPage />} /> //Route to SettingsPage
-        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} /> //Route to ProfilePage if user not authenticated route to LoginPage
+        <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} /> {/*Route to HomePage if user not authenticated route to LoginPage*/}
+        <Route path="/signup" element={!authUser ? <SignupPage /> : <Navigate to="/" />} /> {/*Route to SignupPage if user is authenticated route to HomePage*/}
+        <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} /> {/*Route to LoginPage if user is authenticated route to HomePage*/}
+        <Route path="/settings" element={<SettingsPage />} /> {/*Route to SettingsPage*/}
+        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} /> {/*Route to ProfilePage if user not authenticated route to LoginPage*/}
       </Routes>
 
       <Toaster />
