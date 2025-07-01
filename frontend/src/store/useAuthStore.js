@@ -88,21 +88,23 @@ export const useAuthStore = create((set, get) => ({
 
     connectSocket: () => {
         const { authUser } = get();
-        if (!authUser || get().socket?.connected) return;
+        if (!authUser || !authUser._id || get().socket?.connected) return;
 
-        console.log("Connecting socket to:", BASE_URL, "with userId:", authUser?._id);
+        console.log("✅ Connecting socket to:", BASE_URL, "with userId:", authUser._id);
+
         const socket = io(BASE_URL, {
-        query: {
+            withCredentials: true,
+            query: {
             userId: authUser._id,
-        },
+            },
         });
-        
+
         socket.connect();
 
-        set({ socket: socket });
+        set({ socket });
 
         socket.on("getOnlineUsers", (userIds) => {
-        set({ onlineUsers: userIds });
+            set({ onlineUsers: userIds });
         });
     },
     
