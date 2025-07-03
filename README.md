@@ -9,7 +9,7 @@ npm run start
 ```
 
 # Requires .env
-in .env copy and edit following:
+in backend folder create a .env file and copy and edit following:
 ```
 PORT = 5001
 NODE_ENV = development
